@@ -280,11 +280,7 @@ task :spec_prep do
       logger.info("Creating symlink from #{link} to #{target}")
       if is_windows
         target = File.join(File.dirname(link), target) unless Pathname.new(target).absolute?
-        if Dir.respond_to?(:create_junction)
-          Dir.create_junction(link, target)
-        else
-          system("call mklink /J \"#{link.gsub('/', '\\')}\" \"#{target.gsub('/', '\\')}\"")
-        end
+        system("call mklink /J \"#{link.gsub('/', '\\')}\" \"#{target.gsub('/', '\\')}\"")
       else
         FileUtils::ln_sf(target, link)
       end
